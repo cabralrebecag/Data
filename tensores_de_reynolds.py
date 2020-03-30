@@ -1,14 +1,16 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Created on Mon Mar 23 08:01:25 2020
 
-This is a temporary script file.
+@author: rebecacabral
 """
+
 import csv
 import pandas as pd
 import numpy as np
  
-save_path = r'/home/cfx/Rebeca/REYNOLDS'
+save_path = r'/Users/rebecacabral/Documents/CDTN/TENSORES_DE_REYNOLDS'
 st = '30mm_sub2_topo_t01.000001.txt'
 
 
@@ -36,7 +38,7 @@ for aux in range (1,9):
 
  
         
-for aux in range (10,99):  #mudar o ultimo indice para o número de testes feitos pelo programa
+for aux in range (10,73):  #mudar o ultimo indice para o número de testes feitos pelo programa
     st2 = st[:-6]
     aux2 = str(aux)
     st3 = st2 + aux2 + '.txt'
@@ -106,4 +108,3 @@ VxVyrms.append(uvmod.mean()**0.5)
 das = {'u':Vx,'v':Vy,'uu':VxVx, 'vv':VyVy,'uv':VxVy,'uu_rms':VxVxrms, 'vv_rms':VyVyrms,'uv_rms':VxVyrms}
 resultado = pd.DataFrame(data=das)
 pd.DataFrame(resultado).to_csv("30mm_sub2_topo_t01TR.csv", sep='\t')
-   

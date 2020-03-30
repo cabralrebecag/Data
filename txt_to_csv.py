@@ -1,38 +1,44 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jan 14 15:32:01 2020
+Created on Mon Mar 23 08:03:37 2020
 
-@author: cfx
+@author: rebecacabral
 """
 
 import pandas as pd
 import numpy as np
 
-#df = pd.read_fwf('15mm_campo_topo_t05.txt')
-#df.to_csv('15mm_campo_topo_t05.csv')
+df = pd.read_fwf('15mm_campo_topo_t01.txt')
+df.to_csv('15mm_campo_topo_t01.csv')
+df = pd.read_fwf('15mm_campo_topo_t02.txt')
+df.to_csv('15mm_campo_topo_t02.csv')
+df = pd.read_fwf('15mm_campo_topo_t03.txt')
+df.to_csv('15mm_campo_topo_t03.csv')
+df = pd.read_fwf('15mm_campo_topo_t04.txt')
+df.to_csv('15mm_campo_topo_t04.csv')
+df = pd.read_fwf('15mm_campo_topo_t05.txt')
+df.to_csv('15mm_campo_topo_t05.csv')
+
 import glob
 
-path = r'/home/cfx/Rebeca/INCERTEZA_EXT' # use your path
+path = '/Users/rebecacabral/Documents/CDTN/INCERTEZA_EXT' # use your path
 all_files = glob.glob('15mm_campo_topo_t0*.csv')
 li = []
 for filename in all_files:
-    df = pd.read_csv(filename, index_col=None, header=0)
+    df = pd.read_csv(filename, skiprows=6, index_col=None, header=0, sep='\t')
     li.append(df)
 frame = pd.concat(li, axis=1, ignore_index=True)
 
-frame=frame.drop(df.index[0:5])
-frame=frame.iloc[:,[0,1,2,8,9,28,29,48,49,68,69,88,89]]
-frame = frame.convert_objects(convert_dates='coerce',convert_numeric=True)
 
-R1=frame.filter([8,28,48,68,88], axis=1)
-R2=frame.filter([9,29,49,69,89], axis=1)
+frame=frame.iloc[:,[0,1,2,8,9,25,26,42,43,59,60,76,77]]
+#frame = frame.convert_objects(convert_dates='coerce',convert_numeric=True)
 
-df1 = pd.DataFrame(R1) 
-df2 = pd.DataFrame(R2)
+R1=frame.filter([8,25,42,59,76], axis=1)
+R2=frame.filter([9,26,43,60,77], axis=1)
 
-Mean1=df1.mean(axis=1)
-Mean2=df2.mean(axis=1)
+Mean1=R1.mean(axis=1)
+Mean2=R2.mean(axis=1)
 
 DLDA1=0.03902   #Em metros
 DLDA2=0.03878   #Em metros
@@ -105,5 +111,5 @@ Result_con= pd.concat(Result, axis=1, ignore_index=True)
 #Final=pd.DataFrame(Result_df)
 #print(Result_df)
 result = pd.DataFrame(Result_con.values, columns = ['X[mm]','Y[mm]','MédiaU','MédiaV','IncertezaExtendidaU','IncertezaExtendidaV', 'IncertezaExpandidaNormalizadaU', 'IncertezaExpandidaNormalizadaV', 'ComponenteDU', 'ComponenteDV', 'ComponenteDW', 'IncertezaVetorV'] )
-result.to_csv("/home/cfx/Rebeca/INCERTEZA_EXT/Final")
+result.to_csv("/Users/rebecacabral/Documents/CDTN/INCERTEZA_EXT/Final")
 print("Secondary Flow       " + sf)

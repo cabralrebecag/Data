@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Mar  3 10:57:04 2020
+Created on Mon Mar 23 08:00:46 2020
 
-@author: cfx
+@author: rebecacabral
 """
 
 import numpy as np
@@ -22,9 +22,10 @@ from os import listdir
 from os.path import isfile, join
 import statistics
 
-save_path = r'/home/cfx/Rebeca/PERDA_DE_CARGA'
+save_path =r'/Users/rebecacabral/Documents/CDTN/PERDA_DE_CARGA'
 onlyfiles = [f for f in listdir(save_path) if isfile(join(save_path, f))]
-del onlyfiles[-1]
+del onlyfiles[1]
+#del onlyfiles[2]
 
 lista=[]
 linha=[]
@@ -33,9 +34,8 @@ re=[]
 ro=[]
 vis=[]
 
-
 for aux in range (0,7):    #delimitar a range de acordo com o numero dos testes analisados
-    with open(onlyfiles[aux], newline='') as csvfile:
+    with open(onlyfiles[aux], encoding="utf8") as csvfile:
     
         spamreader = csv.reader(csvfile) 
     
