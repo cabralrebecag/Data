@@ -10,9 +10,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import uic
 import sys
-# from W_COMBINADA import w_combinada
-# from INCERTEZA_EXT import txt_to_csv
-# from PERDA_DE_CARGA import perda_de_carga
+from W_COMBINADA.w_combinada import path_pd
+from INCERTEZA_EXT.txt_to_csv import path_lda
+from PERDA_DE_CARGA.perda_de_carga import pd
 # from TENSORES_DE_REYNOLDS import tensores_de_reynolds
 
 Form, Window = uic.loadUiType('início.ui')
@@ -26,7 +26,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.form.toolButton_reynolds.clicked.connect(self.r_botao)
         self.ui.form.toolButton_lda.clicked.connect(self.lda_botao)
         self.ui.form.toolButton_pd.clicked.connect(self.pd_botao)
-        # self.ui.form.ok_button.clicked.connect(self.ok_botao)
+        self.ui.form.ok_button.clicked.connect(self.ok_botao)
         
     def r_botao(self):
          path1 = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select a directory')
@@ -46,6 +46,28 @@ class mywindow(QtWidgets.QMainWindow):
              self.ui.form.file_pd.setText(path3)
          self.string_path3 = path3 
          
+    def ok_botao(self):
+        pd.save_path = self.string_path3 
+        print(pd.hl, pd.k)
+        path_lda.path = self.string_path2
+        path_lda.result.to_csv(path_lda.path + '/Final')
+        print(("Secondary Flow       " + path_lda.sf), path_lda.result)
+        path_pd.save_path = self.string_path3
+        print(path_pd.resultad)
+        
+        
+        
+ 
+        # with concurrent.futures.ThreadPoolExecutor() as executer:
+        #     f1 = executer.submit(thread_mmao, num_images2, dir, file_prefix, num_primeira)
+        #     f2 = executer.submit(thread_bckg, num_images, dir, file_prefix, num_primeira)
+        #     mao = f1.result()
+        #     bck_ground = f2.result()  
+        # x = threading.Thread(target = thread_processing, args = (num_images, dir, file_prefix, num_primeira, bck_ground, mao, met, w_size, ovl, n_iterations))
+        # x.start()
+
+        
+        
 app = QApplication([])
 application = mywindow()
 application.show()
