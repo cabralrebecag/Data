@@ -13,6 +13,8 @@ import sys
 from W_COMBINADA.w_combinada import path_pd
 from INCERTEZA_EXT.txt_to_csv import path_lda
 from PERDA_DE_CARGA.perda_de_carga import pd
+from INCERTEZA_EXT.gráficos import perfil_velocidade
+from Campo_Vetorial_15mm_v1 import campo_vetorial
 # from TENSORES_DE_REYNOLDS import tensores_de_reynolds
 
 Form, Window = uic.loadUiType('início.ui')
@@ -27,6 +29,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.form.toolButton_lda.clicked.connect(self.lda_botao)
         self.ui.form.toolButton_pd.clicked.connect(self.pd_botao)
         self.ui.form.ok_button.clicked.connect(self.ok_botao)
+        self.ui.form.ok_button.clicked.connect(lambda:self.check_box(self.ui.form.velocity_profile,self.ui.form.vector_field))
         
     def r_botao(self):
          path1 = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select a directory')
@@ -45,7 +48,8 @@ class mywindow(QtWidgets.QMainWindow):
          if path3:
              self.ui.form.file_pd.setText(path3)
          self.string_path3 = path3 
-         
+ 
+                
     def ok_botao(self):
         pd.save_path = self.string_path3 
         print(pd.hl, pd.k)
@@ -55,7 +59,11 @@ class mywindow(QtWidgets.QMainWindow):
         path_pd.save_path = self.string_path3
         print(path_pd.resultad)
         
-        
+    def check_box(self, velocity_profile, vector_field):
+        if self.ui.form.velocity_profile.isChecked():
+             perfil_velocidade.plot = (path_lda.frame + path_lda.R1 + path_lda.R2)
+        if self.ui.form.vector_field.isChecked():
+             campo_vetorial.d1 = path_lda.result
         
  
         # with concurrent.futures.ThreadPoolExecutor() as executer:
