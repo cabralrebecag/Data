@@ -51,13 +51,20 @@ class mywindow(QtWidgets.QMainWindow):
  
                 
     def ok_botao(self):
-        pd.save_path = self.string_path3 
-        print(pd.hl, pd.k)
-        path_lda.path = self.string_path2
-        path_lda.result.to_csv(path_lda.path + '/Final')
-        print(("Secondary Flow       " + path_lda.sf), path_lda.result)
-        path_pd.save_path = self.string_path3
-        print(path_pd.resultad)
+        b = w(self.string_path3)
+        print (b)
+
+        d = incert_ext_w(self.string_path3)
+        print (d)
+
+        a = path_lda(self.string_path2, self.string_path2)
+        print (a)
+
+        c = perda_carga(self.string_path3)
+        print (c)
+        
+        e = tensores(self.string_path1)
+        print (e)
         
     def check_box(self, velocity_profile, vector_field):
         if self.ui.form.velocity_profile.isChecked():
